@@ -15,14 +15,16 @@ public class ConversionsModel : PageModel
     /// Stores the converted number of kilometers
     /// </summary>
     public string Output { get; set; } = string.Empty;
+    public string ConversionType { get; set; } = string.Empty;
 
     /// <summary>
     /// Sets the input and converts ot from miles to kilometers
     /// </summary>
-    public void OnGet()
+    public void OnGet(string conversionType, string input)
     {
         Input = "3.1415";
-
+        input = Input ?? string.Empty;
+        conversionType = ConversionType ?? string.Empty;
         ViewData["ConversionType"] = "Miles to Kilometers";
         ViewData["Title"] = "Conversions";
 
