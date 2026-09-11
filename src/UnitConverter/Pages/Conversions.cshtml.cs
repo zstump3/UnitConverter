@@ -24,8 +24,9 @@ public class ConversionsModel : PageModel
     /// <summary>
     /// Sets the input and converts ot from miles to kilometers
     /// </summary>
-    public void OnGet(string ConversionType, string Input)
+    public void OnGet()
     {
+        //Initalize the input and validate the input.
         double inputValue = 0;
         try
         {
@@ -35,36 +36,27 @@ public class ConversionsModel : PageModel
         {
             ViewData["Error Message"] = "Input must be a valid number" + ex.Message;
         }
-        double convertedValue = 0;
-        switch (ConversionType)
+
+        //Switch expression for choosing between the conversions
+        double? convertedValue = ConversionType switch
         {
-            case "MilestoKilometers":
-                convertedValue = new UnitOf.Length()
-                    .FromMiles(inputValue)
-                    .ToKilometers();
-                Output = convertedValue.ToString();
-                break;
+            "MilesToKilometers" =>
+                new UnitOf.Length().FromMiles(inputValue).ToKilometers(),
 
-            case "KilometerstoMiles":
-                convertedValue = new UnitOf.Length()
-                    .FromKilometers(inputValue)
-                    .ToMiles();
-                Output = convertedValue.ToString();
-                break;
+            "KilometersToMiles" =>
+                new UnitOf.Length().FromKilometers(inputValue).ToMiles(),
 
+
+            _ => null
+        };
+
+        if (convertedValue is null)
+        {
+            ViewData["Error Message"] = "Unknown conversion type";
         }
 
-
-        // ViewData["ConversionType"] = "Miles to Kilometers";
-        ViewData["Title"] = "Conversions";
-
-        // double inputValue = Convert.ToDouble(Input);
-        // double convertedValue = new UnitOf.Length()
-        //     .FromMiles(inputValue)
-        //     .ToKilometers();
-
-        // Output = convertedValue.ToString();
+        //Display the OutPut of the conversion
+        Output = convertedValue.ToString();
 
     }
-
 }
