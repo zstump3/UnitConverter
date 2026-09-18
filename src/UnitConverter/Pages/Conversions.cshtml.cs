@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace UnitConverter.Pages;
+using UnitConverter.Models;
 
 /// <summary>
 /// Handles the mile to kilometers conversion page.
@@ -12,18 +13,28 @@ public class ConversionsModel : PageModel
     /// Stores the number of miles
     /// </summary>
     [BindProperty(SupportsGet = true)]
-    public string Input { get; set; } = "3.1415";
+    public ConversionModel Conversion { get; set; } = new();
 
-    /// <summary>
-    /// Stores the converted number of kilometers
-    /// </summary>
-    public string Output { get; set; } = string.Empty;
+    [BindProperty (SupportsGet = true)]
+    public string Input
+    {
+        get => Conversion.Input;
+        set => Conversion.Input = value;
+    }
 
-    /// <summary>
-    /// Used for getting the conversion type the end user wishes to do.
-    /// </summary>
     [BindProperty(SupportsGet = true)]
-    public string ConversionType { get; set; } = "MilesToKilometers";
+    public string Output
+    {
+        get => Conversion.Output;
+        set => Conversion.Output = value;
+    }
+
+    [BindProperty(SupportsGet = true)]
+    public string ConversionType
+    {
+        get => Conversion.ConversionType;
+        set => Conversion.ConversionType = value;
+    }
 
     /// <summary>
     /// Used for the conversions of different types of measurements. Takes an input and displays the output of the
@@ -32,7 +43,7 @@ public class ConversionsModel : PageModel
     public void OnGet()
     {
         ViewData["ConversionType"] =
-            ConversionType.Replace("To", " to ");
+            Conversion.ConversionType.Replace("To", " to ");
 
         ViewData["Title"] = "Conversions";
 
@@ -40,7 +51,7 @@ public class ConversionsModel : PageModel
         double inputValue = 3.1415;
         try
         {
-            inputValue = Convert.ToDouble(Input);
+            inputValue = Convert.ToDouble(Conversion.Input);
         }
         catch (FormatException)
         {
@@ -57,7 +68,7 @@ public class ConversionsModel : PageModel
 
         //Switch expression for choosing between the conversions
         //TODO Maybe work to add all the conversions later
-        double? convertedValue = ConversionType switch
+        double? convertedValue = Conversion.ConversionType switch
         {
             //TODO Make the URL names syntax friendly. Take the URL input and make all lowercase.
             "MilesToKilometers" =>
