@@ -71,28 +71,28 @@ public class ConversionsModel : PageModel
         double? convertedValue = Conversion.ConversionType switch
         {
             //TODO Make the URL names syntax friendly. Take the URL input and make all lowercase.
-            "MilesToKilometers" =>
+            ConversionTypes.MilesToKilometers =>
                 new UnitOf.Length().FromMiles(inputValue).ToKilometers(),
 
-            "KilometersToMiles" =>
+            ConversionTypes.KilometersToMiles =>
                 new UnitOf.Length().FromKilometers(inputValue).ToMiles(),
 
-            "FahrenheitToCelsius" =>
+            ConversionTypes.FahrenheitToCelsius =>
                 new UnitOf.Temperature().FromFahrenheit(inputValue).ToCelsius(),
 
-            "CelsiusToFahrenheit" =>
+            ConversionTypes.CelsiusToFahrenheit =>
                 new UnitOf.Temperature().FromCelsius(inputValue).ToFahrenheit(),
 
-            "PoundsToKilograms" =>
+            ConversionTypes.PoundsToKilograms =>
                 new UnitOf.Mass().FromPounds(inputValue).ToKilograms(),
 
-            "KilogramsToPounds" =>
+            ConversionTypes.KilogramsToPounds =>
                 new UnitOf.Mass().FromKilograms(inputValue).ToPounds(),
 
-            "KilobytesToTerabytes" =>
+            ConversionTypes.KilobytesToTerabytes=>
                 new UnitOf.DataStorage().FromKilobytes(inputValue).ToTerabytes(),
 
-            "TerabytesToKilobytes" =>
+            ConversionTypes.TerabytesToKilobytes =>
                 new UnitOf.DataStorage().FromTerabytes(inputValue).ToKilobytes(),
 
             _ => null
