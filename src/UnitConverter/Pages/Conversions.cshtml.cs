@@ -29,7 +29,6 @@ public class ConversionsModel : PageModel
         set => Conversion.Output = value;
     }
 
-    [BindProperty(SupportsGet = true)]
     public string ConversionType
     {
         get => Conversion.ConversionType;
@@ -70,7 +69,7 @@ public class ConversionsModel : PageModel
         //TODO Maybe work to add all the conversions later
         double? convertedValue = Conversion.ConversionType switch
         {
-            //TODO Make the URL names syntax friendly. Take the URL input and make all lowercase.
+
             ConversionTypes.MilesToKilometers =>
                 new UnitOf.Length().FromMiles(inputValue).ToKilometers(),
 

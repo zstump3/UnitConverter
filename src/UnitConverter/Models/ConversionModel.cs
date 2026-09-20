@@ -2,9 +2,9 @@
 
 public class ConversionModel
 {
-    public string Input {get; set;} = "MilesToKilometer";
+    public string Input {get; set;} = "3.1415";
 
-    public string Output {get; set;} = "3.1415";
+    public string Output {get; set;} = string.Empty;
 
-    public string ConversionType {get; set;} = string.Empty;
+    public string ConversionType {get; set;} = ConversionTypes.MilesToKilometers;
 }

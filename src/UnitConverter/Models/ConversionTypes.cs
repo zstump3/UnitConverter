@@ -28,7 +28,7 @@ public static class ConversionTypes
             [CelsiusToFahrenheit]  = "Celsius to Fahrenheit",
             [PoundsToKilograms] = "Pounds to Kilograms",
             [KilogramsToPounds]  = "Kilograms to Pounds",
-            [KilobytesToTerabytes] = "Kilobytes To Terabytes",
+            [KilobytesToTerabytes] = "Kilobytes to Terabytes",
             [TerabytesToKilobytes]  = "Terabytes to Kilobytes",
 
         };
