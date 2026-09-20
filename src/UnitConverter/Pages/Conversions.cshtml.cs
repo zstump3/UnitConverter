@@ -28,7 +28,7 @@ public class ConversionsModel : PageModel
         get => Conversion.Output;
         set => Conversion.Output = value;
     }
-
+    [BindProperty(SupportsGet = true)]
     public string ConversionType
     {
         get => Conversion.ConversionType;

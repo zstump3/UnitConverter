@@ -4,37 +4,40 @@
 @{
     ViewData["Title"] = "Unit Converter";
 }
-<h1>Unit Converter</h1>
+@* This is something I wanted to try out to add background and rounded corners. *@
+<div class="bg-dark text-light p-4 rounded border border-success">
 
-<form method="get" action="/Conversions">
-    <div>
-        <label for="conversionType" class="form-label">
-            The Conversion Type
-        </label>
+    <h1>Unit Converter</h1>
 
-        <select id="conversionType" name="Conversion.ConversionType" class="form-select">
-            @foreach (var conversion in ConversionTypes.All)
-            {
-                <option value="@conversion.Key">
-                    @conversion.Value
-                </option>
-            }
-        </select>
-    </div>
+    <form method="get" action="/Conversions">
+        <div>
+            <label for="conversionType" class="form-label">
+                The Conversion Type
+            </label>
 
-    <div>
-        <label for="input" class="form-label mt-3">
-            The Value to Convert
-        </label>
+            <select id="conversionType" name="Conversion.ConversionType" class="form-select">
+                @foreach (var conversion in ConversionTypes.All)
+                {
+                    <option value="@conversion.Key">
+                        @conversion.Value
+                    </option>
+                }
+            </select>
+        </div>
 
-        <input id="input" name="Conversion.Input" type="text" class="form-control" />
-    </div>
+        <div>
+            <label for="input" class="form-label mt-3">
+                The Value to Convert
+            </label>
 
-    <button type="submit" class="btn btn-primary mt-3">
-        Convert
-    </button>
-</form>
+            <input id="input" name="Conversion.Input" type="text" class="form-control" />
+        </div>
 
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert
+        </button>
+    </form>
+</div>
 
 
 
