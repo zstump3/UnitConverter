@@ -41,10 +41,23 @@ public class ConversionsModel : PageModel
     /// </summary>
     public void OnGet()
     {
-        ViewData["ConversionType"] =
-            Conversion.ConversionType.Replace("To", " to ");
-
         ViewData["Title"] = "Conversions";
+
+        if (ConversionTypes.All.TryGetValue(
+                Conversion.ConversionType,
+                out string? displayName))
+
+        {
+            ViewData["ConversionType"] = displayName;
+        }
+        else
+        {
+            ViewData["ErrorMessage"] = "Unknown Conversion Type";
+            return;
+        }
+
+        // ViewData["ConversionType"] =
+        //     Conversion.ConversionType.Replace("To", " to ");
 
         //Initalize the input and validate the input.
         double inputValue = 3.1415;
@@ -105,6 +118,6 @@ public class ConversionsModel : PageModel
         }
 
         //Display the OutPut of the conversion
-        Output = convertedValue.ToString();
+        Conversion.Output = convertedValue.ToString();
     }
 }
