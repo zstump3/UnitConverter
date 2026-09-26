@@ -1,0 +1,13 @@
+﻿@page
+@model UnitConverter.Pages.QuickConversions
+
+
+<h1>Quick Conversions</h1>
+
+<a asp-page="/Index">Back to Conversions Form</a>
+
+<form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
+    <label for="miles" class="form-label">Miles</label>
+    <input id="miles" name="input" type="text" class="form-control" />
+    <button type="submit" class="btn btn-primary">Convert Miles to Kilometers</button>
+</form>
