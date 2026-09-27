@@ -7,7 +7,25 @@
 <a asp-page="/Index">Back to Conversions Form</a>
 
 <form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
+    <input type="hidden" name="handler" value="@ConversionTypes.MilesToKilometers"/>
+
     <label for="miles" class="form-label">Miles</label>
-    <input id="miles" name="input" type="text" class="form-control" />
-    <button type="submit" class="btn btn-primary">Convert Miles to Kilometers</button>
+
+    <input id="miles" name="input" type="text" class="form-control"/>
+
+    <button type="submit" class="btn btn-primary">
+        Convert Miles to Kilometers
+    </button>
+</form>
+
+<form method="get" asp-page-handler="@ConversionTypes.KilometersToMiles">
+    <input type="hidden" name="handler" value="@ConversionTypes.KilometersToMiles"/>
+
+    <label for="kilometers" class="form-label">Kilometer</label>
+
+    <input id="kilometers" name="input" type="number" step="any" class="form-control" />
+
+    <button type="submit" class="btn btn-primary">
+        Convert Kilometers to Miles
+    </button>
 </form>
