@@ -2,30 +2,121 @@
 @model UnitConverter.Pages.QuickConversions
 
 
-<h1>Quick Conversions</h1>
+<div class="bg-dark text-light p-4 rounded border border-success">
 
-<a asp-page="/Index">Back to Conversions Form</a>
+    <h1>Quick Conversions</h1>
 
-<form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
-    <input type="hidden" name="handler" value="@ConversionTypes.MilesToKilometers"/>
+    <a asp-page="/Index">Back to Conversions Form</a>
 
-    <label for="miles" class="form-label">Miles</label>
+    <form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
+        <input type="hidden" name="handler" value="@ConversionTypes.MilesToKilometers"/>
 
-    <input id="miles" name="input" type="text" class="form-control"/>
+        <label for="miles" class="form-label">Miles</label>
 
-    <button type="submit" class="btn btn-primary">
-        Convert Miles to Kilometers
-    </button>
-</form>
+        <input id="miles" name="input" type="text" class="form-control"/>
 
-<form method="get" asp-page-handler="@ConversionTypes.KilometersToMiles">
-    <input type="hidden" name="handler" value="@ConversionTypes.KilometersToMiles"/>
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Miles to Kilometers
+        </button>
+    </form>
 
-    <label for="kilometers" class="form-label">Kilometer</label>
+    <hr class="my-4" />
 
-    <input id="kilometers" name="input" type="number" step="any" class="form-control" />
+    <form method="get" asp-page-handler="@ConversionTypes.KilometersToMiles">
+        <input type="hidden" name="handler" value="@ConversionTypes.KilometersToMiles"/>
 
-    <button type="submit" class="btn btn-primary">
-        Convert Kilometers to Miles
-    </button>
-</form>
+        <label for="kilometers" class="form-label">Kilometer</label>
+
+        <input id="kilometers" name="input" type="number" step="any" class="form-control" />
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Kilometers to Miles
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <form method="get" asp-page-handler="@ConversionTypes.FahrenheitToCelsius">
+        <input type="hidden" name="handler" value="@ConversionTypes.FahrenheitToCelsius"/>
+
+        <label for="fahrenheit" class="form-label">Fahrenheit</label>
+
+        <textarea id="fahrenheit" name="input" class="form-control" rows="2"></textarea>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Fahrenheit to Celsius
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    @* TODO Make the slider more user friendly *@
+
+    <form method="get" asp-page-handler="@ConversionTypes.CelsiusToFahrenheit">
+        <input type="hidden" name="handler" value="@ConversionTypes.CelsiusToFahrenheit"/>
+
+        <label for="celsius" class="form-label">Celsius Range 0&deg;C to 100&deg;C</label>
+
+        <input id="celsius" name="input" type="range" min="0" max="100" step="1" value="0" class="form-range" />
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Celsius to Fahrenheit
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <form method="get" asp-page-handler="@ConversionTypes.PoundsToKilograms">
+        <input type="hidden" name="handler" value="@ConversionTypes.PoundsToKilograms" />
+
+        <label for="pounds" class="form-label">Pounds</label>
+
+        <select id="pounds" name="input" asp-items="Model.AmountOptions" class="form-select"></select>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Pounds to Kilograms
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <form method="get" asp-page-handler="@ConversionTypes.KilogramsToPounds">
+        <input type="hidden" name="handler" value="@ConversionTypes.KilogramsToPounds" />
+
+        <label for="kilograms" class="form-label">Kilograms</label>
+
+        <select id="kilograms" name="input" asp-items="Model.AmountOptions" class="form-select"></select>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Kilograms to Pounds
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <form method="get" asp-page-handler="@ConversionTypes.KilobytesToTerabytes">
+        <input type="hidden" name="handler" value="@ConversionTypes.KilobytesToTerabytes" />
+
+        <label for="kilobytes" class="form-label">Kilobytes</label>
+
+        <select id="kilobytes" name="input" asp-items="Model.AmountOptions" class="form-select"></select>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Kilobytes to Terabytes
+        </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <form method="get" asp-page-handler="@ConversionTypes.TerabytesToKilobytes">
+        <input type="hidden" name="handler" value="@ConversionTypes.TerabytesToKilobytes" />
+
+        <label for="terabytes" class="form-label">Terabytes</label>
+
+        <select id="terabytes" name="input" asp-items="Model.AmountOptions" class="form-select"></select>
+
+        <button type="submit" class="btn btn-primary mt-3">
+            Convert Terabytes to Kilobytes
+        </button>
+    </form>
+</div>

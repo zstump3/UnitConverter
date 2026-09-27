@@ -9,11 +9,13 @@
 }
 else
 {
-    @* TODO Add the unit name to the end of input and output *@
-    <h1>@ViewData["ConversionType"]</h1>
+    <div class="bg-dark text-light p-4 rounded border border-success">
+        @* TODO Add the unit name to the end of input and output *@
+        <h1>@ViewData["ConversionType"]</h1>
 
-    <p>Input: @Model.Conversion.Input</p>
+        <p>Input: @Model.Conversion.Input</p>
 
-    <p>Output: @Model.Conversion.Output</p>
+        <p>Output: @Model.Conversion.Output</p>
+    </div>
 }
 <a href="/">Return to the conversion form</a>
