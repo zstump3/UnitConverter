@@ -34,11 +34,10 @@ public class UnitOfConversionService : IConversionService
             ConversionTypes.TerabytesToKilobytes =>
                 new UnitOf.DataStorage().FromTerabytes(inputValue).ToKilobytes(),
 
-            _ => null
+            _ =>  throw new ArgumentException(
+                $"Unsupported conversion type: {conversionType}",
+                nameof(conversionType))
         };
-        if (convertedValue == null)
-        {
-        }
 
         return (decimal)convertedValue!;
     }
