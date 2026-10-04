@@ -8,6 +8,20 @@
 
     <a asp-page="/Index">Back to Conversions Form</a>
 
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Error:</strong> @Model.ErrorMessage
+        </div>
+    }
+    else if (!string.IsNullOrEmpty(Model.Output))
+    {
+        <div class="alert alert-success" role="status">
+            <strong>Output:</strong> @Model.Output
+        </div>
+    }
+
     <form method="get" asp-page-handler="@ConversionTypes.MilesToKilometers">
         <input type="hidden" name="handler" value="@ConversionTypes.MilesToKilometers"/>
 

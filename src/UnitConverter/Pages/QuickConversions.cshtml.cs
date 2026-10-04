@@ -2,11 +2,30 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UnitConverter.Models;
+using UnitConverter.Services;
 
 namespace UnitConverter.Pages;
 
 public class QuickConversions : PageModel
 {
+
+    private readonly IConversionService _conversionService;
+
+    public QuickConversions(IConversionService conversionService)
+    {
+        _conversionService = conversionService;
+    }
+
+    /// <summary>
+    /// Stores the result of the conversions
+    /// </summary>
+    public string? Output { get; set; }
+
+    /// <summary>
+    /// Used for the error message for end users
+    /// </summary>
+    public string? ErrorMessage { get; set; }
+
     public void OnGet()
     {
 
@@ -19,9 +38,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetMilesToKilometers(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.MilesToKilometers,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.MilesToKilometers);
     }
 
     /// <summary>
@@ -31,9 +50,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetKilometersToMiles(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.KilometersToMiles,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.KilometersToMiles);
     }
 
     /// <summary>
@@ -43,9 +62,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetFahrenheitToCelsius(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.FahrenheitToCelsius,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.FahrenheitToCelsius);
     }
 
     /// <summary>
@@ -55,9 +74,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetCelsiusToFahrenheit(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.CelsiusToFahrenheit,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.CelsiusToFahrenheit);
     }
 
     /// <summary>
@@ -79,9 +98,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetPoundsToKilograms(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.PoundsToKilograms,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.PoundsToKilograms);
     }
 
     /// <summary>
@@ -91,9 +110,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetKilogramsToPounds(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.KilogramsToPounds,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.KilogramsToPounds);
     }
 
     /// <summary>
@@ -103,9 +122,9 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetKilobytesToTerabytes(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.KilobytesToTerabytes
-            ,input);
+        return PerformConversion(
+            input,
+            ConversionTypes.KilobytesToTerabytes);
     }
 
     /// <summary>
@@ -115,13 +134,47 @@ public class QuickConversions : PageModel
     /// <returns>A redirect to Conversion Page with the conversion type and input</returns>
     public IActionResult OnGetTerabytesToKilobytes(string input)
     {
-        return RedirectToConversion(
-            ConversionTypes.TerabytesToKilobytes,
-            input);
+        return PerformConversion(
+            input,
+            ConversionTypes.TerabytesToKilobytes);
     }
 
     private IActionResult RedirectToConversion(string conversionType, string input)
     {
         return RedirectToPage("/Conversions", new { conversionType, input });
+    }
+
+    private IActionResult PerformConversion(string input, string conversionType)
+    {
+        Output = null;
+        ErrorMessage = null;
+
+        if (!decimal.TryParse(input, out decimal inputValue))
+        {
+            ErrorMessage = "Input must be a valid number.";
+            return Page();
+        }
+
+        if (!ConversionTypes.All.ContainsKey(conversionType))
+        {
+            ErrorMessage = "Unknown conversion";
+            return Page();
+        }
+
+        decimal result;
+
+        try
+        {
+            result = _conversionService.Convert(inputValue, conversionType);
+        }
+        catch (OverflowException)
+        {
+            ErrorMessage = "The conversion result is outside the range.";
+            return Page();
+        }
+
+        Output = result.ToString();
+
+        return Page();
     }
 }
