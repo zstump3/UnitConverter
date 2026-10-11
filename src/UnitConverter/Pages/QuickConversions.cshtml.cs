@@ -10,10 +10,12 @@ public class QuickConversions : PageModel
 {
 
     private readonly IConversionService _conversionService;
+    private readonly ILogger<QuickConversions> _logger;
 
-    public QuickConversions(IConversionService conversionService)
+    public QuickConversions(IConversionService conversionService,  ILogger<QuickConversions> logger)
     {
         _conversionService = conversionService;
+        _logger = logger;
     }
 
     /// <summary>
@@ -149,14 +151,34 @@ public class QuickConversions : PageModel
         Output = null;
         ErrorMessage = null;
 
+        _logger.LogInformation("Conversion request was received for {Input} with {ConversionType}",
+            input,
+            conversionType);
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            _logger.LogWarning("Input is empty for {Input} with {ConversionType}",
+                input,
+                conversionType);
+
+            ErrorMessage = "Input is empty";
+            return Page();
+        }
+
         if (!decimal.TryParse(input, out decimal inputValue))
         {
+            _logger.LogWarning("The Conversion {Input} is invalid",
+                input);
+
             ErrorMessage = "Input must be a valid number.";
             return Page();
         }
 
         if (!ConversionTypes.All.ContainsKey(conversionType))
         {
+            _logger.LogWarning("Unknown conversion type {ConversionType} was received",
+                conversionType);
+
             ErrorMessage = "Unknown conversion";
             return Page();
         }
@@ -166,15 +188,38 @@ public class QuickConversions : PageModel
         try
         {
             result = _conversionService.Convert(inputValue, conversionType);
+
+            Output = result.ToString();
+
+            _logger.LogInformation(
+                "Converted {Input} using {ConversionType} with result {Result}",
+                input,
+                conversionType,
+                result);
+
+            return Page();
         }
-        catch (OverflowException)
+        catch (OverflowException ex)
         {
+            _logger.LogError(
+                ex,
+                "Conversion result was outside the range for {Input} with {ConversionType}",
+                input,
+                conversionType);
+
             ErrorMessage = "The conversion result is outside the range.";
             return Page();
         }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Unexpected error occured while converting {Input} with {ConversionType}",
+                input,
+                conversionType);
 
-        Output = result.ToString();
-
-        return Page();
+            ErrorMessage = "Unexpected error occured while converting.";
+            return Page();
+        }
     }
 }

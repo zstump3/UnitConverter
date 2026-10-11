@@ -1,6 +1,7 @@
 # .NET build output
 bin/
 obj/
+src/UnitConverter/Logs/
 
 # JetBrains Rider / IntelliJ
 .idea/
