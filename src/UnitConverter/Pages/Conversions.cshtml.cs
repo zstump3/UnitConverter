@@ -5,16 +5,19 @@ namespace UnitConverter.Pages;
 using UnitConverter.Models;
 
 /// <summary>
-/// Handles the mile to kilometers conversion page.
+/// Handles the unit conversion request for the Conversion Page.
 /// </summary>
 public class ConversionsModel : PageModel
 {
     /// <summary>
-    /// Stores the number of miles
+    /// Gets or sets the conversion data submitted to the page
     /// </summary>
     [BindProperty(SupportsGet = true)]
     public ConversionModel Conversion { get; set; } = new();
 
+    /// <summary>
+    /// Gets or sets the input value dor the conversion
+    /// </summary>
     [BindProperty (SupportsGet = true)]
     public string Input
     {
@@ -22,12 +25,19 @@ public class ConversionsModel : PageModel
         set => Conversion.Input = value;
     }
 
+    /// <summary>
+    /// Gets or sets the output value produced by the conversion
+    /// </summary>
     [BindProperty(SupportsGet = true)]
     public string Output
     {
         get => Conversion.Output;
         set => Conversion.Output = value;
     }
+
+    /// <summary>
+    /// Gets or sets the type of conversion to perform
+    /// </summary>
     [BindProperty(SupportsGet = true)]
     public string ConversionType
     {
@@ -36,8 +46,7 @@ public class ConversionsModel : PageModel
     }
 
     /// <summary>
-    /// Used for the conversions of different types of measurements. Takes an input and displays the output of the
-    /// Conversion.
+    /// Proccess the request conversion and prepares the result for display
     /// </summary>
     public void OnGet()
     {

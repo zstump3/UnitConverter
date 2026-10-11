@@ -2,8 +2,20 @@ using UnitConverter.Models;
 
 namespace UnitConverter.Services;
 
+/// <summary>
+/// Performs unit conversion using the UnitOf library
+/// </summary>
 public class UnitOfConversionService : IConversionService
 {
+    /// <summary>
+    /// Converts a value using the specified conversion type
+    /// </summary>
+    /// <param name="value">The value to convert</param>
+    /// <param name="conversionType">The type of conversion to perform</param>
+    /// <returns>The converted value</returns>
+    /// <exception cref="ArgumentException">
+    ///Thrown when the conversion type is not supported
+    /// </exception>
     public decimal Convert(decimal value, string conversionType)
     {
         double inputValue = (double)value;

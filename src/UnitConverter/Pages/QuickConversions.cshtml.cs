@@ -6,12 +6,24 @@ using UnitConverter.Services;
 
 namespace UnitConverter.Pages;
 
+/// <summary>
+/// Handles quick unit conversion requests using dependency injections
+/// </summary>
 public class QuickConversions : PageModel
 {
 
     private readonly IConversionService _conversionService;
     private readonly ILogger<QuickConversions> _logger;
 
+    /// <summary>
+    /// Initialize a new  instance of QuickConversions class
+    /// </summary>
+    /// <param name="conversionService">
+    ///Service used to perform unit conversions
+    /// </param>
+    /// <param name="logger">
+    ///Logger used to record conversion events
+    /// </param>
     public QuickConversions(IConversionService conversionService,  ILogger<QuickConversions> logger)
     {
         _conversionService = conversionService;

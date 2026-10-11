@@ -4,10 +4,19 @@ using UnitConverter.Models;
 
 namespace UnitConverter.Services;
 
+/// <summary>
+/// Reads log entries from Serilog JSON log files
+/// </summary>
 public class JsonLogReader : ILogReader
 {
     private readonly string _logDirectory;
 
+    /// <summary>
+    /// Initialize a new instance of the JsonReader class
+    /// </summary>
+    /// <param name="environment">
+    ///The hosting environment used to locate the root.
+    /// </param>
     public JsonLogReader(IWebHostEnvironment environment)
     {
         _logDirectory = Path.Combine(
@@ -15,6 +24,10 @@ public class JsonLogReader : ILogReader
             "Logs");
     }
 
+    /// <summary>
+    /// Reads and deserialize the available JSON log entries
+    /// </summary>
+    /// <returns>A collection of log entries</returns>
     public IEnumerable<LogEntry> Read()
     {
         var entries = new List<LogEntry>();
@@ -62,8 +75,8 @@ public class JsonLogReader : ILogReader
             }
             catch (IOException ex)
             {
-                Console.WriteLine(
-                    $"Could not read {logFile}: {ex.Message}");
+                // Console.WriteLine(
+                //     $"Could not read {logFile}: {ex.Message}");
 
                 continue;
             }
@@ -99,8 +112,8 @@ public class JsonLogReader : ILogReader
                 entries.Add(entry);
             }
         }
-
-        Console.WriteLine($"Entries read: {entries.Count}");
+        //Used this to find errors
+        //Console.WriteLine($"Entries read: {entries.Count}");
 
         return entries;
     }
